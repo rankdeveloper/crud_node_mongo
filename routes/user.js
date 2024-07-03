@@ -41,21 +41,24 @@ router.post('/', async (req, res) => {
 
 
 //getting a user
-router.get('/user/:id', async (req, res) => {
-   
+router.get('/user', async (req, res) => {
+    const { _id } = req.query;
+    if(!_id){
+       return res.status(400).send({msg:"_id is required.."})
+    }
     try{
-        const user = await User.find({'_id':req.params.id})
+        const user = await User.findOne({_id})
 
         if(user){
-            res.status(200).send({msg:"user found",user})
+          return  res.status(200).send({msg:"user found",user})
         }
         else{
-            res.status(400).send({msg:"user not found",user}) 
+            return res.status(400).send({msg:"user not found",user}) 
         }
     }
 
     catch(err){
-        res.status(500).send({err})
+        return res.status(500).send({err})
     }
 
 
@@ -63,11 +66,14 @@ router.get('/user/:id', async (req, res) => {
 
 
 //delete a user
-router.delete('/users/:id', async (req, res) => {
-    const { id } = req.params;
-  
+router.delete('/user', async (req, res) => {
+    const { _id } = req.query;
+    if(!_id){
+        res.status(400).send({msg:"Id is required.."})
+    }
+
     try {
-      const user = await User.findByIdAndDelete({'_id':id});
+      const user = await User.findByIdAndDelete({_id});
       res.send(user);
     } catch (error) {
       console.error(error);

@@ -1,7 +1,5 @@
 const mongoose = require('mongoose')
-const connectMongo = require('../connection')
 
-connectMongo()
 const productSchema = mongoose.Schema({
     item:{
         type:String ,
@@ -13,5 +11,5 @@ const productSchema = mongoose.Schema({
     }
 })
 
-const productModel = mongoose.model('product' , productSchema)
-module.exports =  productModel
+const Product = mongoose.model('product' , productSchema)
+module.exports =  Product
