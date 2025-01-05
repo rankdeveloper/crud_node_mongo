@@ -1,28 +1,15 @@
-const mongoose = require('mongoose');
-const Product = require('./models/product');
+const mongoose = require("mongoose");
 
-
-function connectMongo(){
-    mongoose.connect('mongodb://localhost:27017/nodeUser')
-    .then(() => {
-        console.log('mongo connected..')
-    })
-    .catch(err => console.log('not connected...'))
-
-
-    // mongoose.connect('mongodb://localhost:27017/nodeUser')
-    // .then(async () => {
-    //     try {
-    //         const products = await Product.find({});
-    //         console.log('Products:', products);
-    //     } catch (err) {
-    //         console.log('Error:', err);
-    //     } finally {
-    //         mongoose.connection.close();
-    //     }
-    // })
-    // .catch(err => console.log('Connection error:', err));
-
+async function connectMongo() {
+  try {
+    await mongoose.connect("mongodb://127.0.0.1:27017/nodeUser", {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log("MongoDB connected successfully.");
+  } catch (err) {
+    console.error("MongoDB connection failed:", err);
+  }
 }
 
-module.exports=connectMongo
+module.exports = connectMongo;

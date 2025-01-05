@@ -1,18 +1,15 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const router = require('./routes/user')
-const productRouter = require('./routes/product')
-const connectMongo = require('./connection')
+const express = require("express");
+const router = require("./routes/user");
+const productRouter = require("./routes/product");
+const connectMongo = require("./connection");
 
-connectMongo()
+const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+connectMongo();
+app.use("/", router);
+// app.use("/", productRouter);
 
-const app = express()
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended:false}))
-app.use('/' , router)
-app.use('/' , productRouter)
-
-
-app.listen(3000 , () => {
-    console.log("server is running at port : 3000")
-})
+app.listen(3000, () => {
+  console.log("server is running at port : 3000");
+});
